@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { sanityClient } from "@sanity/client";
+import sanityClient from "../client";
 
 const Project = () => {
   const [projectData, setProjectData] = useState(null);
@@ -11,13 +11,14 @@ const Project = () => {
                 date,
                 place,
                 description,
-                project,
+                projectType,
                 link,
-                tags,
-                }
+                tags
             }`
       )
-      .then((data) => setProjectData(projectData))
+      .then((data) => {
+        setProjectData(data);
+      })
       .catch(console.error);
   }, []);
 
@@ -28,7 +29,7 @@ const Project = () => {
         <h2 className="text-lg text-gray-600 flex justify-center mb-12">
           Welcome To My Projects Page
         </h2>
-        <section>
+        <section className="grid grid-cols-2 gap-8">
           {projectData &&
             projectData.map((project, index) => (
               <article className="relative rounded-lg shadow-xl bg-white p-16">
@@ -62,7 +63,7 @@ const Project = () => {
                     href={project.link}
                     rel="noopener noreferrer"
                     target={"_blank"}
-                    className="text-red-500 font-bold hover:underline hover:text-red-400"
+                    className="text-red-500 font-bold hover:underline hover:text-red-400 text-xl"
                   >
                     View Your Project{""}
                     <span role="img" aria-label="iright pointer"></span>
